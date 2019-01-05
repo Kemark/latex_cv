@@ -5,6 +5,11 @@
 \usepackage[ngerman]{babel}
 \usepackage{geometry}
 \usepackage{ulem}
+\usepackage{tikz}
+
+\graphicspath{{images/}}
+
+\definecolor{highlight}{HTML}{0E5484}
 
 \geometry{a4paper, left=0mm,right=10mm,top=10mm,bottom=10mm}
 %\geometry{a4paper}
@@ -27,7 +32,7 @@
 
 \newenvironment{exercise}% environment name 
 {% begin code 
-  	\par\vspace{\baselineskip}% 
+  	\vspace{\baselineskip}% 
   	\textbf{Exercise}% 
   	asdfaf
 }% 
@@ -35,18 +40,36 @@
 \def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
 
 \newcommand{\profilesection}[1]{%
-    \def\ULthickness{5pt}%
+    \def\ULthickness{1pt}%
     
-    {\par\huge #1 \hspace{5pt}\textcolor{red}{\sout{\hfill}}}\par%
+    \vspace{\baselineskip}% 
+    {\par\huge\textcolor{highlight}{\textbf{#1}} \hspace{5pt}\textcolor{highlight}{\sout{\hfill}}}\par%
     % {\par\huge #1 \rule[0.5ex]{\textwidth}{5pt}}\par%
-    {\par\huge #1 \hrulefill}\par%
+    % {\par\huge #1 \hrulefill}\par%
 }
 
+\newcommand{\cvpic}[1]{
+    \begin{center}
+        \vspace{\baselineskip}% 
+        \includegraphics[width=0.7\textwidth]{#1}
+    \end{center}
+}
+
+\newcommand{\cvname}[1]{
+    {\huge\textcolor{highlight}{\textbf{#1}}}\par
+}
+
+\newcommand{\cvjobtitle}[1]{
+    #1
+}
 
 \begin{document}
   \begin{left_side}
+    \cvpic{alice}
+    \cvname{Markus Kern}
+    \cvjobtitle{Beratar / Software Entwickler}
     \profilesection{Hallo}
-    asdfafs
+    asdfafsasdfasdfa
     \profilesection{Halloasdfs}
     \begin{exercise}
     Hallo2
@@ -66,10 +89,12 @@
       that would not be allowed
       in an fbox.fff
     }
+
     \parbox{\textwidth}{
       Some very long text\\
       that would not be allowed\\
       in an fbox.adfasf
     }
+
     \end{right_side}
 \end{document}
