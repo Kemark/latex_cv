@@ -1,0 +1,75 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{xcolor}
+\usepackage[ngerman]{babel}
+\usepackage{geometry}
+\usepackage{ulem}
+
+\geometry{a4paper, left=0mm,right=10mm,top=10mm,bottom=10mm}
+%\geometry{a4paper}
+
+\newenvironment{left_side}% environment name 
+{% begin code 
+    \begin{minipage}{0.3\textwidth}
+}% 
+{
+    \end{minipage}
+}% end code
+
+\newenvironment{right_side}% environment name 
+{% begin code 
+    \begin{minipage}{0.7\textwidth}
+}% 
+{
+    \end{minipage}
+}% end code
+
+\newenvironment{exercise}% environment name 
+{% begin code 
+  	\par\vspace{\baselineskip}% 
+  	\textbf{Exercise}% 
+  	asdfaf
+}% 
+
+\def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
+
+\newcommand{\profilesection}[1]{%
+    \def\ULthickness{5pt}%
+    
+    {\par\huge #1 \hspace{5pt}\textcolor{red}{\sout{\hfill}}}\par%
+    % {\par\huge #1 \rule[0.5ex]{\textwidth}{5pt}}\par%
+    {\par\huge #1 \hrulefill}\par%
+}
+
+
+\begin{document}
+  \begin{left_side}
+    \profilesection{Hallo}
+    asdfafs
+    \profilesection{Halloasdfs}
+    \begin{exercise}
+    Hallo2
+    \end{exercise}
+  \end{left_side}
+  \begin{right_side}
+    asdfasfa dfasdfaf asf adsa sf afadsf dfads fdsfdzz
+    f
+    asd fad fa dsf dasf ads
+    adsii
+    fsadfasd fasdf asdfffff
+    asdfasfafas
+    fasdffas
+
+    \parbox{\textwidth}{
+      Some very long text
+      that would not be allowed
+      in an fbox.fff
+    }
+    \parbox{\textwidth}{
+      Some very long text\\
+      that would not be allowed\\
+      in an fbox.adfasf
+    }
+    \end{right_side}
+\end{document}
