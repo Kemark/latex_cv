@@ -24,7 +24,7 @@
 
 \newenvironment{right_side}% environment name 
 {% begin code 
-    \begin{minipage}{0.7\textwidth}
+    \begin{minipage}{0.65\textwidth}
 }% 
 {
     \end{minipage}
@@ -50,11 +50,10 @@
 
 \newcommand{\cvpic}[1]{
     \begin{center}
-        \vspace{\baselineskip}% 
         \includegraphics[width=0.7\textwidth]{#1}
     \end{center}
 }
-
+    
 \newcommand{\cvname}[1]{
     {\huge\textcolor{highlight}{\textbf{#1}}}\par
 }
@@ -64,6 +63,9 @@
 }
 
 \begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Left Side
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \begin{left_side}
     \cvpic{alice}
     \cvname{Markus Kern}
@@ -75,7 +77,11 @@
     Hallo2
     \end{exercise}
   \end{left_side}
-  \begin{right_side}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Right Side
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{right_side} 
+
     asdfasfa dfasdfaf asf adsa sf afadsf dfads fdsfdzz
     f
     asd fad fa dsf dasf ads
