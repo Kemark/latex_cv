@@ -4,30 +4,63 @@
 \usepackage{xcolor}
 \usepackage[ngerman]{babel}
 \usepackage{geometry}
+\usepackage{float}
+\usepackage[export]{adjustbox}
 \usepackage{ulem}
 \usepackage{tikz}
+\usepackage{fontawesome}
+\usepackage{hyperref}
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% F O N T
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \usepackage{sans}
+\usepackage{iwona}
+% \usepackage[sfdefault]{ClearSans}
+% \usepackage{montserrat}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% C O N F I G U R A T I O N
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \graphicspath{{images/}}
-
 \definecolor{highlight}{HTML}{0E5484}
+% \definecolor{mainblue}{HTML}{0E5484}
+\definecolor{background}{HTML}{DDDDDD}
+\geometry{a4paper,left=0mm,right=10mm,top=10mm,bottom=10mm}
+\hypersetup{
+    colorlinks=true,
+    urlcolor=highlight,
+    bookmarks=true,
+    pdfpagemode=FullScreen
+}
+\urlstyle{same}
 
-\geometry{a4paper, left=0mm,right=10mm,top=10mm,bottom=10mm}
-%\geometry{a4paper}
-
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% E N V I R O N M E N T S
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{left_side}% environment name 
 {% begin code 
-    \begin{minipage}{0.3\textwidth}
+    \begin{tikzpicture}[remember picture,overlay]
+        \node [rectangle, fill=background, anchor=north, minimum width=13.75cm, minimum height=\paperheight+2cm] (box) at (0cm,1.5cm){};
+    \end{tikzpicture}
+
+    % \vspace{1cm}
+    \begin{minipage}[t][][t]{0.3\textwidth}
 }% 
 {
     \end{minipage}
+    \vspace{1cm}
 }% end code
 
 \newenvironment{right_side}% environment name 
 {% begin code 
-    \begin{minipage}{0.65\textwidth}
+    % \vspace{2cm}
+    \hspace{1cm}
+    \begin{minipage}[t][][t]{0.6\textwidth}
 }% 
 {
     \end{minipage}
+    % \vspace{2cm}
 }% end code
 
 \newenvironment{exercise}% environment name 
@@ -37,21 +70,41 @@
   	asdfaf
 }% 
 
-\def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
-
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% C O M M A N D S
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\profilesection}[1]{%
-    \def\ULthickness{1pt}%
-    
-    \vspace{\baselineskip}% 
-    {\par\huge\textcolor{highlight}{\textbf{#1}} \hspace{5pt}\textcolor{highlight}{\sout{\hfill}}}\par%
-    % {\par\huge #1 \rule[0.5ex]{\textwidth}{5pt}}\par%
-    % {\par\huge #1 \hrulefill}\par%
+    % \vspace{\baselineskip}% 
+    \vspace{-3mm}
+    {\par\huge\textcolor{highlight}{\textbf{#1}}
+     \hspace{5pt}\textcolor{highlight}{\sout{\hfill}}}\par%
+}
+
+\newcommand\skills[1]{ 
+    \noindent
+    \begin{tikzpicture} 
+        \foreach [count=\i] \x/\y in {#1}
+        {    
+            \draw[fill=white, highlight](0,\i) rectangle (\y, \i+0.5);
+            \node [above right ] at (0,\i+0.4) {\x};
+        }
+    \end{tikzpicture}
 }
 
 \newcommand{\cvpic}[1]{
+    % \parbox[t]{\textwidth}{
+    %     \begin{center}
+    %         \includegraphics[width=0.7\textwidth]{#1}
+    %     \end{center}
+    % }
+    % \begin{center}
+    %     \includegraphics[width=0.7\textwidth]{#1}
+    % \end{center}
     \begin{center}
-        \includegraphics[width=0.7\textwidth]{#1}
+        \includegraphics[width=0.7\textwidth,valign=t]{#1}
     \end{center}
+    % \parbox[c]{1em}{\includegraphics{#1} }
+    % \raisebox{-.5\height}{\includegraphics{#1} }
 }
     
 \newcommand{\cvname}[1]{
@@ -59,28 +112,74 @@
 }
 
 \newcommand{\cvjobtitle}[1]{
-    #1
+    \large{\textbf{\mbox{#1}}}%
+    \vspace{\baselineskip}%
 }
 
+\newcommand*\icon[1]{
+    \tikz[baseline=(char.base)]{
+        \large\node[shape=circle,draw, minimum size=1cm, scale=0.7, fill=highlight,highlight,text=background] (char) {#1};
+    }
+}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% D O C U M E N T
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
+    % \Large\icon{\Info}
+    % \begin{tabular}
+    %     \Large\icon{\Info} & asdfasdf
+    % % \ifthenelse{\equal{\givencvdate}{}}{}{\textsc{\Large\icon{\Info}} & \givencvdate\\}
+    % % \ifthenelse{\equal{\givencvaddress}{}}{}{\textsc{\Large\icon{\Letter}} & \givencvaddress\\}
+    % % \ifthenelse{\equal{\givennumberphone}{}}{}{\textsc{\Large\icon{\Telefon}} & \givennumberphone\\}
+    % % \ifthenelse{\equal{\givencvsite}{}}{}{\textsc{\Large\icon{\Mundus}} & \givencvsite}\\
+    % % \ifthenelse{\equal{\givencvmail}{}}{}{\textsc{\large\icon{@}} & \href{mailto:\givencvmail}{\givencvmail}}
+    % \end{tabular}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Left Side
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \begin{left_side}
-    \cvpic{alice}
+    \cvpic{cv-image}
     \cvname{Markus Kern}
-    \cvjobtitle{Beratar / Software Entwickler}
-    \profilesection{Hallo}
-    asdfafsasdfasdfa
-    \profilesection{Halloasdfs}
-    \begin{exercise}
-    Hallo2
-    \end{exercise}
+    \cvjobtitle{Beratar/Software Architekt}
+
+    % \begin{tabular}{p{1cm} @{\hskip .2cm}p{\textwidth}}
+    % \begin{adjustbox}{width=1\textwidth}
+    \renewcommand{\arraystretch}{1.5}
+    % \begin{adjustwidth}{-0.01cm}{}
+    % \hskip-0.2cm
+    \hspace*{-0.3cm}
+    \begin{tabular}{l p{4cm} }
+        \icon{\faBirthdayCake} & 18. Dezember 1968 \\
+        \icon{\faHome} & Am Mühlgraben 8 \newline 74246 Eberstadt\\
+        \icon{\faEnvelope} & Deutschland\\
+        \icon{\faPhone} & \href{tel:491743284130}{+49 174 3284130} \\
+        \icon{\faAt} & \href{mailto:markus@mail-kern.de}{markus@mail-kern.de} \\
+        \icon{\faXing} & \href{http://www.xing.com/profile/Markus_Kern75}{markus\_kern75} \\
+        \icon{\faLinkedin} & \href{http://www.linkedin.com/in/markus-kern75}{markus\_kern75} \\
+    \end{tabular}
+    % \end{adjustwidth}
+% \end{adjustbox}
+    \profilesection{Über mich}
+    laal asdfasfafas adsadfa
+    \profilesection{Fähigkeiten}
+    \skills{
+        {Software Beratung/6},
+        {Architektur Beratung/6},
+        {Scrum/6},
+        {Englisch/4},
+        {Datenbanken{/}SQL/5},
+        {Java{/}Spring{/}.NET/6},
+        {Java-{/}Typescript{/}CSS{/}SASS/6}}
+    % \begin{exercise}
+    % Hallo2
+    % \end{exercise}
   \end{left_side}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Right Side
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{right_side} 
+    \profilesection{Ausbildung}
 
     asdfasfa dfasdfaf asf adsa sf afadsf dfads fdsfdzz
     f
