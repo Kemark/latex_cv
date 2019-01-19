@@ -2,7 +2,7 @@
 \usepackage[utf8]{inputenc}
 
 \usepackage{xcolor}
-\usepackage[ngerman]{babel}
+\usepackage[german]{babel}
 \usepackage{geometry}
 \usepackage{float}
 \usepackage[export]{adjustbox}
@@ -10,6 +10,7 @@
 \usepackage{tikz}
 \usepackage{fontawesome}
 \usepackage{hyperref}
+\usepackage{calc}
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % F O N T
@@ -23,13 +24,14 @@
 % C O N F I G U R A T I O N
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \graphicspath{{images/}}
-\definecolor{highlight}{HTML}{0E5484}
-% \definecolor{mainblue}{HTML}{0E5484}
+% \definecolor{highlight}{HTML}{0E5484}
+\definecolor{highlight}{HTML}{840032}
 \definecolor{background}{HTML}{DDDDDD}
-\geometry{a4paper,left=0mm,right=10mm,top=10mm,bottom=10mm}
+\definecolor{lightgray}{HTML}{BBBBBB}
+\geometry{paper=a4paper, left=0mm, right=10mm, top=0mm, bottom=0mm}
 \hypersetup{
     colorlinks=true,
-    urlcolor=highlight,
+    urlcolor=black,
     bookmarks=true,
     pdfpagemode=FullScreen
 }
@@ -41,24 +43,26 @@
 \newenvironment{left_side}% environment name 
 {% begin code 
     \begin{tikzpicture}[remember picture,overlay]
-        \node [rectangle, fill=background, anchor=north, minimum width=13.75cm, minimum height=\paperheight+2cm] (box) at (0cm,1.5cm){};
+        \draw[fill=background, background] (current page.south west) rectangle (0.34\linewidth, 2cm);
     \end{tikzpicture}
 
-    % \vspace{1cm}
-    \begin{minipage}[t][][t]{0.3\textwidth}
+    \begin{minipage}[t][][t]{0.3\linewidth}
+    \vspace{0pt}
 }% 
 {
     \end{minipage}
-    \vspace{1cm}
+    % \vspace{1cm}
 }% end code
 
 \newenvironment{right_side}% environment name 
 {% begin code 
-    % \vspace{2cm}
-    \hspace{1cm}
-    \begin{minipage}[t][][t]{0.6\textwidth}
-}% 
+    \hspace{0.05\linewidth}
+    \begin{minipage}[t][][t]{0.6\linewidth}
+        \vspace{0pt}
+}%
 {
+
+    % \end{tcolorbox} 
     \end{minipage}
     % \vspace{2cm}
 }% end code
@@ -74,85 +78,89 @@
 % C O M M A N D S
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\profilesection}[1]{%
-    % \vspace{\baselineskip}% 
-    \vspace{-3mm}
-    {\par\huge\textcolor{highlight}{\textbf{#1}}
-     \hspace{5pt}\textcolor{highlight}{\sout{\hfill}}}\par%
+    \vspace{\baselineskip}% 
+    {\par\huge\textcolor{highlight}{#1}
+     \hspace{5pt}\textcolor{highlight}{\sout{\hfill}}}\par% 
+    \vspace{5pt}% 
+}
+
+\newcommand{\profilesectionbox}[1]{%
+    \vspace{\baselineskip}% 
+    \tikz \node [shape=rectangle, fill=white, background, text width=\linewidth, align=left, text=highlight] {
+        {\par\huge\textcolor{highlight}{#1}\hspace{5pt}\textcolor{highlight}{\sout{\hfill}}}
+    };
 }
 
 \newcommand\skills[1]{ 
-    \noindent
-    \begin{tikzpicture} 
-        \foreach [count=\i] \x/\y in {#1}
-        {    
-            \draw[fill=white, highlight](0,\i) rectangle (\y, \i+0.5);
-            \node [above right ] at (0,\i+0.4) {\x};
-        }
-    \end{tikzpicture}
+    \foreach [count=\i] \x/\y in {#1}
+    {    
+        \begin{tikzpicture}[]
+            \draw[color=lightgray, line width=0.8ex] (0,0) arc (0:360:2.2ex) node[align=left,  anchor=west, color=black] { \x };
+            \draw[color=highlight, line width=0.8ex] (0,0) arc (0:3.6*(\y)):2.2ex);
+            \node(box) at (-2.2ex, 0cm) {\footnotesize{\y\%}};
+        \end{tikzpicture}
+        \par
+    }
+}
+
+\newcommand\skillsline[1]{ 
+    \foreach [count=\i] \x/\y in {#1}
+    {
+        \hspace*{5pt}{\x}\par
+        \vspace{2pt}% 
+        \begin{tikzpicture}
+            \draw[fill=white, lightgray](0, 0) rectangle (\linewidth, 0.3);
+            \draw[fill=white, highlight](0, 0) rectangle (0.1667*\y\linewidth, 0.3);
+        \end{tikzpicture}
+    }
 }
 
 \newcommand{\cvpic}[1]{
-    % \parbox[t]{\textwidth}{
-    %     \begin{center}
-    %         \includegraphics[width=0.7\textwidth]{#1}
-    %     \end{center}
-    % }
-    % \begin{center}
-    %     \includegraphics[width=0.7\textwidth]{#1}
-    % \end{center}
-    \begin{center}
-        \includegraphics[width=0.7\textwidth,valign=t]{#1}
-    \end{center}
-    % \parbox[c]{1em}{\includegraphics{#1} }
-    % \raisebox{-.5\height}{\includegraphics{#1} }
+    \parbox[t]{\textwidth}{
+        \begin{center}
+            \includegraphics[width=0.7\textwidth]{#1}
+        \end{center}
+    }
 }
     
 \newcommand{\cvname}[1]{
-    {\huge\textcolor{highlight}{\textbf{#1}}}\par
+    {\huge\textcolor{highlight}{#1}}\par
 }
 
 \newcommand{\cvjobtitle}[1]{
-    \large{\textbf{\mbox{#1}}}%
+    \large{#1}%
     \vspace{\baselineskip}%
 }
 
 \newcommand*\icon[1]{
-    \tikz[baseline=(char.base)]{
-        \large\node[shape=circle,draw, minimum size=1cm, scale=0.7, fill=highlight,highlight,text=background] (char) {#1};
-    }
+    \textcolor{highlight}{#1}
+    % \tikz[baseline=(char.base)]{
+    %     % \large\node[shape=circle,draw, minimum size=1cm, scale=0.7, fill=highlight, background,text=highlight] (char) {#1};
+    %     % \large\node[shape=circl\e,draw, minimum size=1cm, scale=0.7, fill=highlight,highlight,text=background] (char) {#1};
+    % }
+    % }\
 }
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % D O C U M E N T
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-    % \Large\icon{\Info}
-    % \begin{tabular}
-    %     \Large\icon{\Info} & asdfasdf
-    % % \ifthenelse{\equal{\givencvdate}{}}{}{\textsc{\Large\icon{\Info}} & \givencvdate\\}
-    % % \ifthenelse{\equal{\givencvaddress}{}}{}{\textsc{\Large\icon{\Letter}} & \givencvaddress\\}
-    % % \ifthenelse{\equal{\givennumberphone}{}}{}{\textsc{\Large\icon{\Telefon}} & \givennumberphone\\}
-    % % \ifthenelse{\equal{\givencvsite}{}}{}{\textsc{\Large\icon{\Mundus}} & \givencvsite}\\
-    % % \ifthenelse{\equal{\givencvmail}{}}{}{\textsc{\large\icon{@}} & \href{mailto:\givencvmail}{\givencvmail}}
-    % \end{tabular}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Left Side
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \begin{left_side}
     \cvpic{cv-image}
     \cvname{Markus Kern}
-    \cvjobtitle{Beratar/Software Architekt}
+    \cvjobtitle{Berater / Projektleitung / \par Softwarearchitekt}
 
-    % \begin{tabular}{p{1cm} @{\hskip .2cm}p{\textwidth}}
-    % \begin{adjustbox}{width=1\textwidth}
-    \renewcommand{\arraystretch}{1.5}
-    % \begin{adjustwidth}{-0.01cm}{}
-    % \hskip-0.2cm
-    \hspace*{-0.3cm}
+    \renewcommand{\arraystretch}{1.5} % line height of tabular
+    
     \begin{tabular}{l p{4cm} }
         \icon{\faBirthdayCake} & 18. Dezember 1968 \\
-        \icon{\faHome} & Am Mühlgraben 8 \newline 74246 Eberstadt\\
-        \icon{\faEnvelope} & Deutschland\\
+        \icon{\faHome} & Am Mühlgraben 8 
+        \newline 74246 Eberstadt
+        \newline Deutschland\\
+        % \icon{\faEnvelope} & Deutschland\\
         \icon{\faPhone} & \href{tel:491743284130}{+49 174 3284130} \\
         \icon{\faAt} & \href{mailto:markus@mail-kern.de}{markus@mail-kern.de} \\
         \icon{\faXing} & \href{http://www.xing.com/profile/Markus_Kern75}{markus\_kern75} \\
@@ -160,18 +168,25 @@
     \end{tabular}
     % \end{adjustwidth}
 % \end{adjustbox}
-    \profilesection{Über mich}
-    laal asdfasfafas adsadfa
+    \profilesection{Sprachen}
+    \skills{
+        {Deutsch/100},
+        {Englisch/60}}
     \profilesection{Fähigkeiten}
     \skills{
-        {Software Beratung/6},
-        {Architektur Beratung/6},
+        {Software Beratung/100},
+        {Architektur Beratung/100}%
+    }
+    \skills{
         {Scrum/6},
-        {Englisch/4},
         {Datenbanken{/}SQL/5},
-        {Java{/}Spring{/}.NET/6},
-        {Java-{/}Typescript{/}CSS{/}SASS/6}}
-    % \begin{exercise}
+        {Enterprise:\\Java{/}Spring{/}.NET/6},
+        {Java-{/}Typescript{/}CSS{/}SASS/6},
+        {Angular{/}AngularJS/6}%
+    }
+    \profilesection{Referenzen}
+    dasfada
+        % \begin{exercise}
     % Hallo2
     % \end{exercise}
   \end{left_side}
@@ -179,8 +194,24 @@
 % Right Side
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{right_side} 
-    \profilesection{Ausbildung}
 
+    \profilesectionbox{Vermögen}
+
+    \tikz \node [shape=rectangle, fill=white, background, align=left, text=highlight] {
+        aaa
+    };
+
+    \tikz \node [shape=rectangle, fill=white, background, align=left, text=highlight] {
+        \hfill bbbb
+    };
+
+    \newlength\newYsize
+    \setlength{\newYsize}{\linewidth * \ratio{1pt}{6pt} * 2}
+    Deutsch\par
+
+    \skills{
+        {Deutsch/6},
+        {Englisch/4}}
     asdfasfa dfasdfaf asf adsa sf afadsf dfads fdsfdzz
     f
     asd fad fa dsf dasf ads
